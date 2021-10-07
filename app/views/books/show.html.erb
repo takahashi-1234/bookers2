@@ -1,0 +1,9 @@
+<%= render 'users/list',user:@user ,book:@book %>
+
+<h1>Book detail</h1>
+<%= attachment_image_tag @book.user,:profile_image,fallback:"no_image.jpg",size:"60x60" %>
+<%= @book.user.name %>
+<%= @book.title %>
+<%= @book.body %>
+<%= link_to "Edit",edit_book_path(@book.user.id) %>
+<%= link_to "Destroy",method: :delete ,"data-confirm"=>"削除しますか？" %>

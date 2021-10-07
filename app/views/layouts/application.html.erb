@@ -4,12 +4,32 @@
     <title>Bookers</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://kit.fontawesome.com/12120b9d9d.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header>
+      <p>Bookers</p>
+      <div>
+        <% if user_signed_in? %>
+          <%= link_to user_path(current_user.id) do %><i class="fas fa-home"></i><span>Home</span><% end %>
+          <%= link_to users_path do %><i class="fas fa-users"></i><span>Users</span><% end %>
+          <%= link_to books_path do %><i class="fas fa-book-open"></i><span>Book</span><% end %>
+          <%= link_to destroy_user_session_path,method: :delete do %><i class="fas fa-sign-out-alt"></i><span>Log out</span><% end %>
+        <% else %>
+          <%= link_to root_path do %><i class="fas fa-home"></i><span>Home</span><% end %>
+          <%= link_to root_path do %><i class="fas fa-link"></i><span>About</span><% end %>
+          <%= link_to new_user_registration_path do %><i class="fas fa-user-plus"></i><span>Sing up</span><% end %>
+          <%= link_to new_user_session_path do %><i class="fas fa-sign-in-alt"></i><span>Log in</span><% end %>
+        <% end %>
+      </div>
+    </header>
+    <%= render 'layouts/flash' %>
     <%= yield %>
+    <footer>
+      <p>CopyRight Infratop.inc</p>
+    </footer>
   </body>
 </html>
