@@ -8,10 +8,10 @@ class BooksController < ApplicationController
 
   def create
     @book=Book.new(book_params)
-    @book.user_id=current_user.id
+    @book.user_id=@book.user.id
     if @book.save
       flash[:create]="Book was successfully created."
-      redirect_to book_path(current_user.id)
+      redirect_to book_path(@book.id)
     else
       @user=User.find(current_user.id)
       @books=Book.all
@@ -20,7 +20,12 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @book=Book.find(params[:id])
+    @book = Book.find(params[:id])
+    if @book.user == current_user
+      render :edit
+    else
+      redirect_to books_path
+    end
   end
 
   def update
@@ -34,8 +39,9 @@ class BooksController < ApplicationController
   end
 
   def show
-    @book=Book.find(params[:id])
-    @user=User.find(@book.user.id)
+    @create_book=Book.find(params[:id])
+    @book=Book.new
+    @user=User.find(@create_book.user.id)
   end
 
   def destroy
