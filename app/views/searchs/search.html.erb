@@ -1,0 +1,46 @@
+<% if @model=="book" %>
+  <h3>【Booksモデルの検索結果】検索ワード<%= @content %></h3>
+  　<% if @records.empty? %>
+    　<h3>検索結果なし</h3>
+  　<% else %>
+      <table class="table table-hover">
+        <thead>
+          <th></th>
+          <th>title</th>
+          <th>opinion</th>
+          <th></th>
+        </thead>
+      <% @records.each do |book| %>
+        <tr>
+          <td>
+            <a href="/users/<%= book.user.id %>">
+            <%= attachment_image_tag book.user, :profile_image,fallback:"no_image.jpg",size:"60x72" %>
+            </a>
+          </td>
+          <td><%= link_to book_path(book.id) do %><%= book.title %><% end %></td>
+          <td class="small"><%= book.body %></td>
+        <tr>
+      <% end %>
+      </table>
+    <% end %>
+    <% else @model=="user" %>
+      <h3>【Usersモデルの検索結果】検索ワード<%= @content %></h3>
+      <% if @records.empty? %>
+    　<h3>検索結果なし</h3>
+  　<% else %>
+　    <table class="table table-hover">
+      <thead>
+        <th></th>
+        <th>name</th>
+        <th>introduction</th>
+      </thead>
+    　<% @records.each do |user| %>
+        <tr>
+          <td><%= attachment_image_tag user,:profile_image,fallback:"no_image.jpg",size:"60x72" %></td>
+          <td><a href="/users/<%= user.id %>"><%= user.name %></a></td>
+          <td><%= user.introduction %></td>
+        </tr>
+        <% end %>
+      </table>
+      <% end %>
+  <% end %>
