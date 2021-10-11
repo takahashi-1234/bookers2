@@ -1,0 +1,22 @@
+<% if @users.exists? %>
+  <table class="table">
+    <tr>
+      <td>image</td>
+      <td>name</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= attachment_image_tag user,:profile_image,fallback:"no_image.jpg",size:"60x72" %></td>
+      <td><%= user.name %></td>
+      <td>フォロー数:<%= user.followings.count %></td>
+      <td>フォロワー数:<%= user.followers.count %></td>
+      <td><%= link_to "Show" ,user_path(user.id) %></td>
+    </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>ユーザーはいません</p>
+<% end %>

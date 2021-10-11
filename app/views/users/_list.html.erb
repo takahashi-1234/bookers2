@@ -22,10 +22,26 @@
         <p><%= user.introduction %></p>
         </td>
       </tr>
+      <tr>
+        <td><label for="follows">follows</label></td>
+        <td><a href="/users/<%= user.id %>/followings"><%= user.followings.count %></td></a>
+      </tr>
+      <tr>
+        <td><label for="followers">followers</label></td>
+        <td><a href="/users/<%= user.id%>/followers"><%= user.followers.count %></td></a>
+      </tr>
   </table>
+  <% if user.id==current_user.id %>
 　　<a href="/users/<%= user.id %>/edit">
     <i class="fas fa-user-cog btn btn-outline-secondary btn-block"></i>
     </a>
+   <% else %>
+      <% if current_user.following?(user) %>
+        <%= link_to"フォロー中",user_relationship_path(user.id), method: :delete ,class:"btn btn-primary" %>
+      <% else %>
+        <%= link_to"フォローする",user_relationship_path(user.id), method: :post, class:"btn btn-success" %>
+      <% end %>
+    <% end %>
 
   <h1>New book</h1>
   <%= flash[:new] %>
@@ -34,10 +50,8 @@
     <%= f.text_field:title, class:"form-control" %>
     <p>Opinion</p>
     <%= f.text_area:body,class:"form-control" %>
-    <%#<% if user.id==current_user.id %>
-     <p class="mt-3">
-      <%= f.submit "Create Book", class:"btn btn-success" %>
-     </p>
-    <%#<% end %>
+    <p class="mt-3">
+    <%= f.submit "Create Book", class:"btn btn-success" %>
+    </p>
   <% end %>
 </div>
