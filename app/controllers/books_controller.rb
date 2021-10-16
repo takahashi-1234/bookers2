@@ -3,7 +3,9 @@ class BooksController < ApplicationController
 
   def index
     @user=User.find(current_user.id)
-    @books=Book.includes(:favorites).sort{|a,b| b.favorites.where(created_at: Time.current.all_week).size <=> a.favorites.where(created_at: Time.current.all_week).size}
+    @books=Book.includes(:favorites).sort{
+      |a,b| b.favorites.where(created_at: Time.current.all_week).size <=> a.favorites.where(created_at: Time.current.all_week).size
+    }
     @book=Book.new
   end
 

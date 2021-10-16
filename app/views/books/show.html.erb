@@ -17,6 +17,9 @@
             </td>
             <td><%= @created_book.title %></td>
             <td class="small"><%= @created_book.body %></td>
+            <td id="fav_btn_<%= @created_book.id %>">
+              <%= render "books/favorite",book:@created_book %>
+            </td>
             <td>
               閲覧数:<%= @created_book.impressionist_count %>
             </td>

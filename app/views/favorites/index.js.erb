@@ -1,1 +1,1 @@
-$("#index_area").html("<%= j(render "books/box",books: @books) %>");
+$("#fav_btn_<%= @book.id %>").html("<%= j(render "books/favorite",book: @book) %>");
