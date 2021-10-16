@@ -1,0 +1,25 @@
+<% @user.each do |user| %>
+  <h3><%= user.name %>とのチャットルーム</h3>
+<% end %>
+
+
+<div class="mt-5">
+  <% if @messages.present? %>
+    <% @messages.each do |m| %>
+    <div class="my-3">
+      <%= attachment_image_tag m.user,:profile_image,fallback:"no_image.jpg",size:"40x44" %>
+      <%= m.message %>
+      <%= m.created_at.strftime("%Y/%m/%d") %>
+    </div>
+    <% end %>
+  <% else %>
+    <p>メッセージはありません</p>
+  <% end %>
+</div>
+<div class="post">
+  <%= form_with model:@message,local:true do |f| %>
+  <%= f.text_field:message ,placeholder:"メッセージを入れてください" %>
+  <%= f.hidden_field :room_id, value: @room.id %>
+  <%= f.submit "投稿する" %>
+  <% end %>
+</div>

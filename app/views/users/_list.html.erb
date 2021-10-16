@@ -43,6 +43,22 @@
       <% end %>
     <% end %>
 
+  <% unless user.id==current_user.id %>
+    <% if current_user.following?(user) ==true && user.following?(current_user)==true %>
+      <% if @is_room==true %>
+        <p class="user_show_room"><a href="/rooms/<%= @room_id %>">チャットへ</a></p>
+      <% else %>
+        <%= form_with model:@room,local:true do |f| %>
+          <%= fields_for @entry do |r| %>
+            <%= r.hidden_field :user_id ,value: @user.id %>
+          <% end %>
+          <%= f.submit "チャットを始める" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+
   <h1>New book</h1>
   <%= flash[:new] %>
   <%= form_with model:book,local:true do |f| %>

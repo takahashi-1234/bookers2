@@ -2,7 +2,7 @@ class BooksController < ApplicationController
 
   def index
     @user=User.find(current_user.id)
-    @books=Book.all
+    @books=Book.includes(:favorites).sort{|a,b| b.favorites.where(created_at: Time.current.all_week).size <=> a.favorites.where(created_at: Time.current.all_week).size}
     @book=Book.new
   end
 
@@ -44,6 +44,7 @@ class BooksController < ApplicationController
     @user=User.find(@created_book.user.id)
     @new_comment=BookComment.new
     @comments=@created_book.book_comments
+
   end
 
   def destroy
