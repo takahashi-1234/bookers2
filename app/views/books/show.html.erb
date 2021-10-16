@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <div class="row">
     <div class="col-md-3">
-        <%= render 'users/list',user:@user ,book:@book %>
+        <%= render 'users/list',user:@mypage ,book:@book %>
     </div>
 
     <div class="col-md-8 offset-md-1">
@@ -17,8 +17,8 @@
             </td>
             <td><%= @created_book.title %></td>
             <td class="small"><%= @created_book.body %></td>
-            <td id="fav_btn_<%= @created_book.id %>">
-              <%= render 'books/favorite' ,book:@created_book %>
+            <td>
+              閲覧数:<%= @created_book.impressionist_count %>
             </td>
             <% if @created_book.user.id==current_user.id %>
               <td><%= link_to "Edit",edit_book_path(@created_book.id),class:"btn btn-success" %></td>

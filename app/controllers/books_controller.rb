@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  impressionist :actions => [:show]
 
   def index
     @user=User.find(current_user.id)
@@ -41,10 +42,11 @@ class BooksController < ApplicationController
   def show
     @created_book=Book.find(params[:id])
     @book=Book.new
+    @mypage=User.find(current_user.id)
     @user=User.find(@created_book.user.id)
     @new_comment=BookComment.new
     @comments=@created_book.book_comments
-
+    impressionist(@created_book, nil, unique: [:impressionable_id, :ip_address])
   end
 
   def destroy
